@@ -1,0 +1,38 @@
+{% extends "main.j2" %}
+{% block title %}{{context}}{% endblock %}
+{% block name %}<h2>{{context}}</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <p><a href="javascript:history.back()">← Go Back to beach selection </a></p>
+
+    <form action="/beachsearchtides" method="post">
+        <fieldset>
+            <legend>Select Month and Date</legend>
+                <label> Month </label>
+                    <select name="month" required>
+                        {% for month in months %}
+                            <option value="{{month}}">{{month_names[month]}}</option>
+                        {% endfor %}
+                    </select>
+
+                <label> Year </label>
+                    <select name="year" required>
+                        {% for year in range(2024, 2033) %}
+                            <option value="{{year}}">{{year}}</option>
+                        {% endfor %}
+                    </select>
+
+                {# <label> Time of Day - Most beaches are daylight restricted, so "Daylight" is recommended, and "Any Time" can be selected to see all low tides</label>
+                    <select>
+                        <option value=01>Daylight</option>
+                        <option value=02>Any Time</option>
+                    </select> #}
+
+                <input type="hidden" name="beach" value="{{beach}}">
+                <button type="submit">See Low Tides</button>
+
+        </fieldset>   
+    </form>
+
+{% endblock %}

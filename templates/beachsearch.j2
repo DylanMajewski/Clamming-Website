@@ -1,0 +1,65 @@
+{% extends "main.j2" %}
+{% block title %}Beach Search{% endblock %}
+{% block name %}<h2>Beach Search</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <p>Only selected beaches are shown, mostly those that are upland accessible. There are many beaches that are open year-round that are only accessible by boat which are not listed. To see a map of all beaches, please go to the <a href="https://fortress.wa.gov/doh/biotoxin/biotoxin.html">Washington Department of Health Shellfish Safety Map</a>.</p>
+    <p>WDFW and DNR ownership often mean 24 hour access while P&R is usually restricted to open hours or on-site campers. Please check the rules with any other owners such as counties.</p>
+            <table>
+
+        {# 
+            Citation for the following data gathering:
+            Date: 11/30/2023
+            Adapted/Based on:
+            Source URL: https://canvas.oregonstate.edu/courses/1933532/pages/exploration-developing-in-flask?module_item_id=23359479 
+        #}
+        <!-- Access the data that was passed from the app.py -->
+        {% if data %}
+            <thead>
+                <tr>
+                    <th scope="col">Beach Name</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Current Biorestricted Species</th>
+                    <th scope="col">Current Season Description</th>
+                    <th scope="col">Addtional Description</th>
+                    <th scope="col">WDFW Link</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                    <!-- Loops through every item -->
+                    {% for item in data %}
+                <tr>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.NAME']}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.OWNER'] if item['attributes']['GISDB.SDE.ShellfishBeaches.OWNER'] != "None" else ""}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.sde.vBeachStatus.allspeciedescriptions'] if item['attributes']['GISDB.sde.vBeachStatus.allspeciedescriptions'] != "None" else ""}}</td>              
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.Cseason']}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.Oseason']}}</td>
+                    <td scope="col"><a href="{{item['attributes']['GISDB.SDE.ShellfishBeaches.WDFW']}}">Go to Page</a></td>
+
+                    <td>
+                        <form action="/beachsearchdates" method="post">
+                            <input type="hidden" name="start" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.Ostartdate']}}"></input>
+                            <input type="hidden" name="end" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.Oenddate']}}"></input>
+                            <input type="hidden" name="beach" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.NAME']}}"></input>
+                            <button type="submit" name="species" value="1">See Tides for All Species</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/beachsearchdates" method="post">
+                            <input type="hidden" name="start" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.Cstartdate']}}"></input>
+                            <input type="hidden" name="end" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.Cenddate']}}"></input>
+                            <input type="hidden" name="beach" value="{{item['attributes']['GISDB.SDE.ShellfishBeaches.NAME']}}"></input>
+                            <button type="submit" name="species" value="2">See Tides for Clams & Mussels</button>
+                        </form>
+                    </td>
+                </tr>
+                    {% endfor %}
+            </tbody>
+        {% endif %}
+        </table>
+
+        
+{% endblock %}

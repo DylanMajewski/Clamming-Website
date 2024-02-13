@@ -1,0 +1,483 @@
+    
+    /* Citation for the following Cascading style sheet:
+    Date: 12/7/2023
+    Adapted from: Global Stylesheet template from Pam VanLonden for OSU CS 290,
+                  Copied nearly in full from the portfolio in that class of Dylan Majewski (group member).
+                  Color palette from background image taken by Dylan for that project, same series as current background.
+                  Font choice is inspired by the video game "Kentucky Route Zero" developed by Cardboard Computer and published by Annapurna Interactive.
+    Source URL: https://replit.com/@PamVanLonden/a-Global-Stylesheet#App.css */
+
+
+
+/*  ===== MOBILE styles (reside at the top and are inherited by all devices) ===== */
+/*  ===== See tablet, desktop, and print @media queries at the bottom. */
+
+/*   ----- Imports  -----  */
+  /* Add fonts from the app's server*/
+    /*@font-face {                
+      font-family: 'FontName';
+      src: url('FontName.woff2') format('woff2');
+    } 
+    ...or hosted services like Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Karla:ital,wght@0,300;0,600;1,300;1,600&display=swap');
+
+  /* @import 'node_modules/modern-normalize/modern-normalize.css'; */
+        /* npm install modern-normalize
+          Resets elements for browser consistency.  
+          https://www.npmjs.com/package/modern-normalize
+        */         
+  
+  /* Component-specific stylesheets, if any. 
+    @import "component1.css";   
+  */
+
+/*   ----- Variables  -----  */
+:root {
+  --palouseBlue:#398CB8;
+  --palouseBlueTrans:#398CB888;
+  --treelineGreen:#0E3328;
+  --canolaArmy:#68601B;
+  --canolaArmyTrans:#68601B88;
+  --lightLeakRed:#EB600D;
+  --lightLeakRedTrans:#EB600D88;
+  --wheatWhite:#F9E0C0;
+  --wheatWhiteTrans:#F9E0C0CC;
+  --custom-embellishment-name:;
+}
+
+/*  ----- Viewport ----- elements inherited by all remaining elements ----- */
+body {       /* Can alternatively define in html {} or :root {} */
+
+  /*The background-image should cover the entire viewport, one time, from corner to corner.*/
+  background-image:url(../static/background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: bottom left;
+  background-repeat: no-repeat;
+
+  /*The margin, padding, and max-width should allow the background image to show on the left and right sides of
+  the website when the browser is stretched to full screen. Left and right margin set to a percentage is helpful.*/
+  max-width:1000px;
+  margin:8px auto;
+  padding:0;
+
+  /*The color must make use of the variables defined in the root (this is for text).*/
+  color:var(--treelineGreen);
+
+  /*The font-family must define the imported font as well as the generic font family. This font gets inherited
+  by most other selectors, so don't waste time adding font-families to other selectors.*/
+  font-family: 'Karla', sans-serif; /* Define with at least one font name and its related generic family name.*/
+
+}
+
+/*  ----- Page layout blocks -----  */
+/*Define the header{},  main{}, and footer{} blocks, so they incorporate a variety of text colors (using your variables),
+background colors (using your variables), margin, padding, and borders. Be mindful of legibility and readability of content.
+The text should not touch the edges of the article, section, or main block.*/
+header, footer, main {
+  border: 0;
+  border-radius:4px;
+}
+header, footer {
+  text-align:center;
+}
+header, main {
+  background-color:var(--wheatWhiteTrans);
+}
+header {
+  /*background-color:var(--canolaArmyTrans);*/
+  /*text-shadow: 0px 0px 8px var(--lightLeakRed);*/
+  padding: 8px;
+  margin: 8px 8px 4px 8px;
+}
+/*Revise the height, width, margin, and padding of the header image, so it does not
+spill out of the header block. It also does not need to be huge; resize it.*/
+header img {
+  height:55px;
+  width: 55px;
+  margin: 8px 4px 8px 0px;
+  vertical-align:middle;
+  display: inline;
+}
+header h1 a img {
+  height:55px;
+  width: 55px;
+  margin: 8px 0px;
+  vertical-align:middle;
+  display: inline;
+  position: relative;
+  bottom: 0.1em;
+}
+/*Ensure that main block has a background color that improves readability of text on top of the background.*/
+main {
+  margin: 4px 8px 8px 8px;
+  text-align:left;
+  padding: 16px;
+}
+section {}
+  article {}
+    #topic1 {}
+    #topic2 {}
+div {}
+aside {}
+/*Ensure that the copyright statement in the footer is legible with adequate color contrast and padding.*/
+footer {
+  margin: 8px;
+  color: var(--wheatWhite);
+  background-color:var(--palouseBlueTrans);
+  /*color:var(--lightLeakRed);*/
+  padding: 8px;
+  height:50px;
+}
+
+/* ----- Anchors ----- Text links */
+a {}
+a:link {}
+a:hover {}
+a:active {}
+a:visited {}
+
+/*  ----- Navigation ----- Override text links for navigation only.  */
+/*
+Define the global and local nav{} block and anchors nav a{} and nav a:hover {} to look like large buttons (easy for fat fingers
+to touch, as if on a phone). Set text-decoration:none;  Incorporate a variety of text colors (using your variables), background
+colors (using your variables), margin, padding, and borders. Be mindful of legibility and readability of content.
+
+Adding display:flex is encouraged but optional on this global nav block.
+
+Clarification: Give the .local navigation block a class name that differentiates it from the page-to-page navigation, so it can be styled differently.
+Style the local nav{} with display:flex to ensure all future anchors will fit within the body. Choose different sizes, colors, borders, etc. for the local navigation.
+*/
+nav.global {
+  height: auto;
+  padding: 4px;
+  margin:-6px 2px;
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+}
+nav.global a {
+  border:2px solid transparent;
+  border-radius:4px;
+  flex: 1;
+  text-align: center;
+  margin:2px;
+  padding: 4px;
+  background-color:var(--lightLeakRedTrans);
+  color:var(--wheatWhite);
+  font-weight:bold;
+  text-decoration:none;
+
+}
+nav.global a:hover {
+  border:2px solid var(--lightLeakRedTrans);
+  color: var(--treelineGreen);
+  background-color:transparent;
+}
+
+nav.local {
+  display: flex;
+  flex-flow: row wrap;
+  margin:-2px; 
+  padding:0;
+}
+nav.local a {
+  border-radius:4px;
+  flex: 1;
+  border: 2px solid transparent;
+  background-color:var(--wheatWhite);
+  color:var(--palouseBlue);
+  margin:2px;
+  padding: 4px;
+  text-decoration:none;
+  text-align: center;
+}
+nav.local a:hover {
+ color: var(--lightLeakRed);
+ border: 2px solid var(--lightLeakRed);
+}
+
+/*  -----  Typography  ----- */
+p {
+  margin-top: 8px;
+}
+p a {
+  color: inherit;
+  text-align: center;
+}
+p a:hover {
+  border: none;
+}
+footer p a {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  color: inherit;
+  text-decoration:inherit;
+}
+footer p a:hover {
+  text-decoration: underline;
+  border: none;
+}
+br {}
+ol, ul, dl {}
+li {}
+dt {}
+dd {}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DM Serif Display', serif;
+} 
+
+h2, h3, h4, h5, h6 {
+  color:var(--lightLeakRed);
+} 
+h1 {
+  position: relative;
+  bottom: -0.2em;
+  margin: 8px 0;
+  display: inline;
+}
+h2 {
+  margin: 0;
+}
+
+h1 a {
+  position: relative;
+  bottom: 0.1em;
+  display: inline;
+  color: inherit;
+  text-decoration:inherit;
+}
+h1 a:hover {
+  /* position: relative; */
+  /* bottom: -0.2em; */
+  text-decoration: underline;
+  border: none;
+}
+h1 a:active {
+  /* position: relative; */
+  /* bottom: -0.2em; */
+  text-decoration: underline;
+  border: none;
+}
+
+h3 {
+  margin: 0;
+
+}
+h4 {}
+h5 {}
+h6 {}
+
+abbr {}
+acronym {}
+address {}
+blockquote {
+  font-style: italic;
+}
+  q {}
+  cite {}
+em {}
+hr {}
+mark {}
+s {}
+span {}
+strong {}
+sub {}
+sup {}
+time {}
+
+/*  ----- Coding or instructional typography ----- */
+pre {}
+code {}
+kbd {}
+samp {}
+var {}
+del {} 
+ins {}
+
+/*  ----- Table ----- */
+table { 
+  background-color: var(--wheatWhite);
+  border: 1px solid var(--lightLeakRed);
+  border-spacing: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  color: var(--treelineGreen);
+  box-sizing:border-box;
+  width: 100%;
+  border-collapse:separate;
+  margin: 16px 0;
+}
+caption {
+  padding: 0px 0px 8px 0px;
+  text-align:left;
+}
+thead {}
+tbody {}
+tfoot {}
+tr th {
+  padding: 8px;}
+tr td {
+  padding: 8px;
+  border-top:1px solid var(--lightLeakRed);}
+tr {}
+  tr:nth-child(even) {}
+/* th {}
+  th:nth-child(3) {
+    text-align:right;
+  }
+td {}
+  td:nth-child(3) {
+    text-align:right;
+  } */
+colgroup {}
+data {}
+datalist {}
+
+
+/*  ----- Form ----- */
+form {}
+fieldset {
+  background-color: var(--wheatWhite);
+  border:2px solid var(--canolaArmy);
+  border-radius: 4px;
+  padding: 16px 16px;
+  margin:16px 0px 0px 0px;
+}
+  legend {
+    float: left;
+    width: 100%;
+    padding: 0px 4px 8px 0px;
+    font-weight: bold;
+  }
+*:required {}
+:focus{
+  border:2px solid var(--lightLeakRed);
+  outline: none;
+}
+label {
+  margin-top: 8px;
+  display: block;
+}
+label.required:after {
+  content:" *";
+  color:red;
+}
+
+  button {}
+  input {
+    margin: 4px 4px 0 0;
+  }
+  input.other {}
+  input.text {
+    box-sizing:border-box;
+    width: 100%;
+  }
+  output {}
+  meter {}
+  progress {}
+  select {}
+    optgroup {}
+    option {}
+  textarea {
+    box-sizing:border-box;
+    width: 100%;
+    height: 96px;
+  }
+
+  button, select, textarea {
+    margin: 4px 0 0 0;
+  }
+  button, input, select, textarea {
+    border:2px solid var(--palouseBlue);
+    border-radius: 4px;
+    font-size:100%;
+    padding:4px;
+    font-family:inherit;
+    color:var(--treelineGreen);
+  }
+
+/* ----- Media ----- */
+figure {}
+  figcaption {}
+  figure img {}
+svg {
+  fill:var(--treelineGreen);
+  vertical-align: -10%;
+  display: inline;
+}
+picture {}
+  source {}
+iframe {}
+video {}
+audio {}
+embed {}
+object {}
+
+/*  ----- Classes for alignment, positioning, widths, grids, embellishments, and animation -----  */
+
+/*Define the set of 10 figures{}s (that incorporate the .gallery class) using
+the flex method and a variety of margin, padding, border, and color variables.*/
+.gallery {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin:0 -8px; 
+    padding:0;
+}
+
+.gallery figure {
+  width: auto;
+  box-sizing: border-box;
+  max-width: 464px;
+  margin:8px;
+  padding:8px;
+  background-color: var(--wheatWhite);
+  border:2px solid var(--canolaArmy);
+  border-radius: 4px;
+}
+.gallery img {
+  width:100%;
+  box-sizing: border-box;
+  border-radius:4px;
+}
+.gallery figcaption {
+  text-align: justify;
+  text-justify: inter-word;
+  padding:2px;
+}
+
+.floatright {}
+.floatleft {}
+.center-middle {}
+
+.ten {}
+.twenty {}
+.thirty {}
+.forty {}
+.fifty {}
+.sixty {}
+.seventy {}
+.eighty {}
+
+.radius {}
+.circle {}
+.boxshadow {}
+.tshadow {} 
+.gradient {}
+.shape {}
+
+@keyframes App-logo {}
+
+/*   ===== TABLET  media query overrides mobile styles ===== */
+@media all and (min-width: 600px) {}
+
+/*   ===== DESKTOP  media query overrides mobile and tablet styles ===== */
+@media all and (min-width: 1080px) {}
+
+/*   ===== PRINT  media query overrides previous styles =====  */
+@media print {}

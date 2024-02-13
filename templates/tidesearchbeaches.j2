@@ -1,0 +1,71 @@
+{% extends "main.j2" %}
+{% block title %}{{context}}{% endblock %}
+{% block name %}<h2>{{context}}</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <p><a href="javascript:history.back()">← Go Back to tide selection</a></p>
+    {# https://stackoverflow.com/questions/8814472/how-to-make-an-html-back-link #}
+    <p>Only selected beaches are shown, mostly those that are upland accessible. There are many beaches that are open year-round that are only accessible by boat which are not listed. To see a map of all beaches, please go to the <a href="https://fortress.wa.gov/doh/biotoxin/biotoxin.html">Washington Department of Health Shellfish Safety Map</a>.</p>
+    <p>WDFW and DNR ownership often mean 24 hour access while P&R is usually restricted to open hours or on-site campers. Please check the rules with any other owners such as counties.</p>
+    {% if species == "1"%}
+    <p>Fetched beaches for all species are based on oyster season, as clam and mussel season either the same or a subset of that.</p>
+    {% endif %}
+
+        <!-- https://developers.facebook.com/docs/plugins/share-button -->
+        <!-- https://developers.facebook.com/docs/plugins/share-button -->
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id)
+                {var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+                        fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+        </script> 
+
+        <table>
+
+        {# 
+            Citation for the following data gathering:
+            Date: 11/30/2023
+            Adapted/Based on:
+            Source URL: https://canvas.oregonstate.edu/courses/1933532/pages/exploration-developing-in-flask?module_item_id=23359479 
+        #}
+        <!-- Access the data that was passed from the app.py -->
+        {% if data %}
+            <thead>
+                <tr>
+                    <th scope="col">Beach Name</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Current Biorestricted Species</th>
+                    <th scope="col">Current Season Description</th>
+                    <th scope="col">Addtional Description</th>
+                    <th scope="col">WDFW Link</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                    <!-- Loops through every item -->
+                    {% for item in data %}
+                <tr>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.NAME']}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.OWNER'] if item['attributes']['GISDB.SDE.ShellfishBeaches.OWNER'] != "None" else ""}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.sde.vBeachStatus.allspeciedescriptions'] if item['attributes']['GISDB.sde.vBeachStatus.allspeciedescriptions'] != "None" else ""}}</td>              
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.Cseason']}}</td>
+                    <td scope="col">{{item['attributes']['GISDB.SDE.ShellfishBeaches.Oseason']}}</td>
+                    <td scope="col"><a href="{{item['attributes']['GISDB.SDE.ShellfishBeaches.WDFW']}}">Go to Page</a></td>
+                    <td scope="col">
+                        <div class="fb-share-button" data-href="https://clamcatcher.com/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://clamcatcher.com/" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </td>
+                </tr>
+                    {% endfor %}
+            </tbody>
+        {% endif %}
+        </table>
+
+        
+{% endblock %}

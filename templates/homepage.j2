@@ -1,0 +1,19 @@
+{% extends "main.j2" %}
+{% block title %}Homepage{% endblock %}
+{% block name %}<h2>Homepage</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+        <p><a href="/rules">State Resources</a>
+             - <b>Prior to engaging in shellfishing activities, especially if you are unfamiliar with the practice or state shellfishing requirements</b>, it is crucial to be aware of health, safety, legality, and sustainability considerations.
+            Please consult the state-provided resources for current information on seasons and safety restrictions, as these can change rapidly.
+            It is essential to note that recreational shellfishing may be prohibited in certain areas, and improper execution can pose serious safety risks.
+            While Dylan's Clam Catcher serves as a helpful tool for shellfishing, it is important to recognize that it may not be consistently accurate.
+            Users are reminded of their responsibility to adhere to legal regulations and prioritize safety to prevent any potential illegal actions or injuries.
+            Addtionally, please practice sustainability and regulated limits to maintain the environment and protect the shellfish population now and in the future.
+            </p>
+        <p><a href="/tidesearch">Tide Search</a> - Search for a low tide date and corresponding open beaches.</p>
+        <p><a href="/beachsearch">Beach Search</a> - Search for a beach and then find low tides corresponding to its season.</p>
+        <p><a href="/about">About This Website</a></p>
+
+{% endblock %}

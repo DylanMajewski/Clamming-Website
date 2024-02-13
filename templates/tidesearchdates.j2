@@ -1,0 +1,54 @@
+{% extends "main.j2" %}
+{% block title %}Tides - {{date}}{% endblock %}
+{% block name %}<h2>Tides - {{date}}</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+            <table>
+
+        {# 
+            Citation for the following data gathering:
+            Date: 11/30/2023
+            Adapted/Based on:
+            Source URL: https://canvas.oregonstate.edu/courses/1933532/pages/exploration-developing-in-flask?module_item_id=23359479 
+        #}
+        <!-- Access the data that was passed from the app.py -->
+        <p><a href="javascript:history.back()">← Go Back to date selection </a></p>
+        <p>Low tides shown are those below MLW, or 2.83' MLLW. Tides and Daylight times are based on Seattle (NOAA Station 9447130, LAT 38.907192 & LONG -77.036873). Tides throughout the Sound will be within about 30 minutes of Seattle. Differences in daylight are negligible.</p>
+
+        {% if data %}
+            <thead>
+                <tr>
+                    <!-- Loops through the columns name -->
+                    <th scope="col" data-field="t" data-filter-control="input">Date and Time</th>
+                    <th scope="col" data-field="t" data-filter-control="input">Tide MLLW</th>
+                    <th scope="col" data-field="t" data-filter-control="input">Dawn</th>
+                    <th scope="col" data-field="t" data-filter-control="input">Dusk</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Loops through every item -->
+                {% for item in data %}
+                <tr>
+                    <!-- For each item, get key -->
+                    <td> {{item["date"]}} </td>
+                    <td> {{item["v"]}}' </td>
+                    <td> {{item["dawn"]}} </td>
+                    <td> {{item["dusk"]}} </td>
+
+                    <td>
+                        <form action="/tidesearchbeaches" method="post">
+                            <input type="hidden" name="v" value="{{item["v"]}}"></input>
+                            <input type="hidden" name="species" value="{{species}}"></input>
+                            <button type="submit" name="t" value="{{item["t"]}}">See Open Beaches</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+        </table>
+
+        
+{% endblock %}

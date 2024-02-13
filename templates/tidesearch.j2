@@ -1,0 +1,55 @@
+{% extends "main.j2" %}
+{% block title %}Tide Search{% endblock %}
+{% block name %}<h2>Tide Search</h2>{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+    <form action="/tidesearchdates" method="post">
+        <fieldset>
+            <legend>Select Month and Date</legend>
+                <label> Month </label>
+                    <select name="month" required>
+                        <option value=01>January</option>
+                        <option value=02>February</option>
+                        <option value=03>March</option>
+                        <option value=04>April</option>
+                        <option value=05>May</option>
+                        <option value=06>June</option>
+                        <option value=07>July</option>
+                        <option value=08>August</option>
+                        <option value=09>September</option>
+                        <option value=10>October</option>
+                        <option value=11>November</option>
+                        <option value=12>December</option>
+                    </select>
+
+                <label> Year </label>
+                    <select name="year" required>
+                        {% for year in range(2024, 2033) %}
+                            <option value="{{year}}">{{year}}</option>
+                        {% endfor %}
+                    </select>
+
+                {# <label> Time of Day - Most beaches are daylight restricted, so "Daylight" is recommended, and "Any Time" can be selected to see all low tides</label>
+                    <select>
+                        <option value=1>Daylight</option>
+                        <option value=2>Any Time</option>
+                    </select> #}
+
+                <label>
+                    Shellfish Types - <b>New feature:</b> Select what types of Shellfish you want to harvest.
+                    "All Shellfish" is the previous default option and recommended since nearly all beaches have a single season for everything. "Clams and Mussels" excludes oysters and restricts the search to that season only if there is a difference.
+                </label>
+                    <select name="species" required>
+                        <option value=1>All Shellfish</option>
+                        <option value=2>Clam and Mussels</option>
+                    </select>
+
+
+                <button type="submit">See Low Tides</button>
+
+        </fieldset>   
+    </form>
+
+{% endblock %}
